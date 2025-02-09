@@ -1,8 +1,10 @@
 import { useEffect, useState } from 'react'
-import { Link, Route, BrowserRouter as Router, Routes } from 'react-router-dom'
+import { Route, BrowserRouter as Router, Routes } from 'react-router-dom'
 
 import './App.css'
+// import Navbar from './components/Navbar'
 import ProtectedRoute from './components/ProtectedRoute'
+import BasicLayout from './layouts/BasicLayout'
 import Example from './pages/Example'
 import Home from './pages/Home'
 import Login from './pages/Login'
@@ -26,39 +28,27 @@ function App() {
 
   return (
     <Router>
-      <nav>
-        <Link to="/">Home</Link>
-        <Link to="/example">Example</Link>
-        {isAuthenticated ? (
-          <>
-            <Link to="/logout">Logout</Link>
-          </>
-        ) : (
-          <>
-            <Link to="/register">Register</Link>
-            <Link to="/login">Login</Link>
-          </>
-        )}
-      </nav>
       <Routes>
-        <Route path="/" element={<Home />} />
-        <Route
-          path="/example"
-          element={
-            <ProtectedRoute isAuthenticated={isAuthenticated}>
-              <Example />
-            </ProtectedRoute>
-          }
-        />
-        <Route path="/register" element={<Register />} />
-        <Route
-          path="/login"
-          element={<Login setIsAuthenticated={setIsAuthenticated} />}
-        />
-        <Route
-          path="/logout"
-          element={<Logout setIsAuthenticated={setIsAuthenticated} />}
-        />
+        <Route element={<BasicLayout isAuthenticated={isAuthenticated} />}>
+          <Route path="/" element={<Home />} />
+          <Route
+            path="/example"
+            element={
+              <ProtectedRoute isAuthenticated={isAuthenticated}>
+                <Example />
+              </ProtectedRoute>
+            }
+          />
+          <Route path="/register" element={<Register />} />
+          <Route
+            path="/login"
+            element={<Login setIsAuthenticated={setIsAuthenticated} />}
+          />
+          <Route
+            path="/logout"
+            element={<Logout setIsAuthenticated={setIsAuthenticated} />}
+          />
+        </Route>
       </Routes>
     </Router>
   )
