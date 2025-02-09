@@ -11,4 +11,6 @@ RUN pnpm install --frozen-lockfile
 
 WORKDIR /opt/api
 
+RUN npx prisma generate
+
 CMD ["pnpm", "dev"]

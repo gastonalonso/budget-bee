@@ -1,4 +1,6 @@
 import AutoLoad, { AutoloadPluginOptions } from '@fastify/autoload'
+import fastifyCookie from '@fastify/cookie'
+import fastifySession from '@fastify/session'
 import { FastifyPluginAsync, FastifyServerOptions } from 'fastify'
 import { join } from 'node:path'
 
@@ -13,6 +15,16 @@ const app: FastifyPluginAsync<AppOptions> = async (
   opts,
 ): Promise<void> => {
   // Place here your custom code!
+  void fastify.register(fastifyCookie)
+
+  void fastify.register(fastifySession, {
+    secret: 'a7f8d3e4c2b9a1e6f5d8c3b2a9e4f7d6',
+    cookie: {
+      secure: false,
+      httpOnly: true,
+      maxAge: 86400000,
+    },
+  })
 
   // Do not touch the following lines
 

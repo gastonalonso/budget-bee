@@ -19,11 +19,15 @@
   "license": "ISC",
   "dependencies": {
     "@fastify/autoload": "^6.0.0",
+    "@fastify/cookie": "^11.0.2",
     "@fastify/sensible": "^6.0.0",
+    "@fastify/session": "^11.1.0",
     "@prisma/client": "6.3.1",
+    "@types/bcryptjs": "^2.4.6",
+    "bcryptjs": "^2.4.3",
     "fastify": "^5.0.0",
     "fastify-cli": "^7.3.0",
-    "fastify-plugin": "^5.0.0"
+    "fastify-plugin": "^5.0.1"
   },
   "devDependencies": {
     "@types/node": "^22.1.0",
