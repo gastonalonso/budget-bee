@@ -23,3 +23,6 @@ Thumbs.db
 # Build output
 dist/
 build/
+
+# Workspace settings
+*.code-workspace
