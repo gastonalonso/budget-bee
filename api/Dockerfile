@@ -7,7 +7,7 @@ WORKDIR /opt
 COPY ./pnpm-lock.yaml ./pnpm-workspace.yaml ./
 COPY ./api /opt/api/
 
-RUN pnpm install --prod
+RUN pnpm install
 
 WORKDIR /opt/api
 
