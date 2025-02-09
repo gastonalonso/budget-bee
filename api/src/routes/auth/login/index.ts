@@ -46,10 +46,18 @@ const login: FastifyPluginAsync = async (fastify, opts) => {
         return reply.status(401).send({ message: 'Invalid email or password' })
       }
 
-      // Create a session for the user
-      request.session.userId = user.id
+      const token = await reply.jwtSign({ userId: user.id })
 
-      return reply.send({ message: 'Logged in successfully' })
+      return reply
+        .setCookie('token', token, {
+          domain: 'localhost',
+          path: '/',
+          secure: true,
+          httpOnly: true,
+          sameSite: 'strict',
+        })
+        .code(200)
+        .send({ message: 'Success' })
     },
   )
 }

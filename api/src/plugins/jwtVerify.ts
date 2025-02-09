@@ -3,11 +3,12 @@ import fastifyPlugin from 'fastify-plugin'
 
 export default fastifyPlugin(async (fastify) => {
   fastify.decorate(
-    'authenticate',
+    'jwtVerify',
     async (request: FastifyRequest, reply: FastifyReply) => {
-      // Check if the session contains a userId
-      if (!request.session.userId) {
-        return reply.status(401).send({ message: 'Unauthorized' })
+      try {
+        await request.jwtVerify()
+      } catch {
+        reply.status(401).send({ message: 'Unauthorized' })
       }
     },
   )
@@ -15,6 +16,6 @@ export default fastifyPlugin(async (fastify) => {
 
 declare module 'fastify' {
   export interface FastifyInstance {
-    authenticate(request: FastifyRequest, reply: FastifyReply): Promise<void>
+    jwtVerify(request: FastifyRequest, reply: FastifyReply): Promise<void>
   }
 }

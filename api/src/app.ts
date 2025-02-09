@@ -1,6 +1,6 @@
 import AutoLoad, { AutoloadPluginOptions } from '@fastify/autoload'
 import fastifyCookie from '@fastify/cookie'
-import fastifySession from '@fastify/session'
+import fastifyJwt from '@fastify/jwt'
 import { FastifyPluginAsync, FastifyServerOptions } from 'fastify'
 import { join } from 'node:path'
 
@@ -14,15 +14,14 @@ const app: FastifyPluginAsync<AppOptions> = async (
   fastify,
   opts,
 ): Promise<void> => {
-  // Place here your custom code!
+  // Fastify Cookie Plugin
   void fastify.register(fastifyCookie)
-
-  void fastify.register(fastifySession, {
+  // Fastify JWT Plugin
+  void fastify.register(fastifyJwt, {
     secret: 'a7f8d3e4c2b9a1e6f5d8c3b2a9e4f7d6',
     cookie: {
-      secure: false,
-      httpOnly: true,
-      maxAge: 86400000,
+      cookieName: 'token',
+      signed: false,
     },
   })
 

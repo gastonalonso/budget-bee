@@ -41,7 +41,7 @@ const register: FastifyPluginAsync = async (fastify, opts) => {
         },
       })
 
-      return reply.send({ message: 'User registered successfully', user })
+      return reply.send({ ...user })
     },
   )
 }
