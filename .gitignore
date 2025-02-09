@@ -26,3 +26,6 @@ build/
 
 # Workspace settings
 *.code-workspace
+
+# Database
+db/
