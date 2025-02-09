@@ -1,0 +1,29 @@
+version: '3'
+services:
+  api:
+    build:
+      context: ./
+      dockerfile: ./api/Dockerfile.dev
+    image: budget-bee-dev-api
+    container_name: budget-bee-dev-api
+    volumes:
+      - ./api:/opt/api
+      - /opt/api/node_modules/
+    env_file:
+      - ./.env
+
+  app:
+    build:
+      context: ./
+      dockerfile: ./app/Dockerfile.dev
+    image: budget-bee-dev-app
+    container_name: budget-bee-dev-app
+    volumes:
+      - ./app:/opt/app
+      - /opt/app/node_modules/
+    env_file:
+      - ./.env
+    depends_on:
+      - api
+    ports:
+      - 5173:5173
