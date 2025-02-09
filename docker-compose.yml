@@ -1,0 +1,19 @@
+version: '3'
+services:
+  api:
+    build:
+      context: ./
+      dockerfile: ./api/Dockerfile
+    restart: always
+
+  app:
+    build:
+      context: ./
+      dockerfile: ./app/Dockerfile
+    ports:
+      - "$EXPOSED_PORT:80"
+    restart: always
+    depends_on:
+      - api
+    volumes:
+      - ./app/nginx.conf:/etc/nginx/conf.d/default.conf
