@@ -1,7 +1,8 @@
-import { BrowserRouter as Router, Route, Routes, Link } from "react-router-dom";
-import Home from "./pages/Home";
-import Example from "./pages/Example";
-import "./App.css";
+import { Link, Route, BrowserRouter as Router, Routes } from 'react-router-dom'
+
+import './App.css'
+import Example from './pages/Example'
+import Home from './pages/Home'
 
 function App() {
   return (
@@ -15,7 +16,7 @@ function App() {
         <Route path="/example" element={<Example />} />
       </Routes>
     </Router>
-  );
+  )
 }
 
-export default App;
+export default App

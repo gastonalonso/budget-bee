@@ -1,5 +1,5 @@
 function Example() {
-  return <h2>Example Page</h2>;
+  return <h2>Example Page</h2>
 }
 
-export default Example;
+export default Example
