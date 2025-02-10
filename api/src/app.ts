@@ -1,6 +1,7 @@
 import AutoLoad, { AutoloadPluginOptions } from '@fastify/autoload'
 import fastifyCookie from '@fastify/cookie'
 import fastifyJwt from '@fastify/jwt'
+import fastifyStatic from '@fastify/static'
 import { FastifyPluginAsync, FastifyServerOptions } from 'fastify'
 import { join } from 'node:path'
 
@@ -16,6 +17,7 @@ const app: FastifyPluginAsync<AppOptions> = async (
 ): Promise<void> => {
   // Fastify Cookie Plugin
   void fastify.register(fastifyCookie)
+
   // Fastify JWT Plugin
   void fastify.register(fastifyJwt, {
     secret: 'a7f8d3e4c2b9a1e6f5d8c3b2a9e4f7d6',
@@ -24,8 +26,6 @@ const app: FastifyPluginAsync<AppOptions> = async (
       signed: false,
     },
   })
-
-  // Do not touch the following lines
 
   // This loads all plugins defined in plugins
   // those should be support plugins that are reused
@@ -40,6 +40,14 @@ const app: FastifyPluginAsync<AppOptions> = async (
   void fastify.register(AutoLoad, {
     dir: join(__dirname, 'routes'),
     options: opts,
+  })
+
+  void fastify.register(fastifyStatic, {
+    root: join(__dirname, '../..', 'app/dist'),
+  })
+
+  void fastify.setNotFoundHandler((request, reply) => {
+    reply.sendFile('index.html')
   })
 }
 

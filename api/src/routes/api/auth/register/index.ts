@@ -1,7 +1,7 @@
 import bcrypt from 'bcryptjs'
 import { FastifyPluginAsync } from 'fastify'
 
-import { prisma } from '../../../prisma'
+import { prisma } from '../../../../prisma'
 
 // Define the interface for the request body
 interface RegisterBody {
