@@ -2,8 +2,9 @@ import { createContext, useContext } from 'react'
 
 interface AuthContextType {
   isAuthenticated: boolean
-  login: (username: string, password: string) => Promise<void>
   register: (username: string, password: string) => Promise<void>
+  login: (username: string, password: string) => Promise<void>
+  logout: () => Promise<void>
 }
 
 export const AuthContext = createContext<AuthContextType | null>(null)

@@ -16,7 +16,11 @@ function Navbar() {
         </Link>
       </div>
       <div className="navbar-end">
-        {isAuthenticated && (
+        {isAuthenticated ? (
+          <Link to="/logout" className="btn">
+            Logout
+          </Link>
+        ) : (
           <>
             <Link to="/login" className="btn">
               Login

@@ -20,9 +20,6 @@ importers:
       '@fastify/sensible':
         specifier: ^6.0.0
         version: 6.0.3
-      '@fastify/session':
-        specifier: ^11.1.0
-        version: 11.1.0
       '@prisma/client':
         specifier: 6.3.1
         version: 6.3.1(prisma@6.3.1(typescript@5.6.3))(typescript@5.6.3)
@@ -895,9 +892,6 @@ packages:
 
   '@fastify/sensible@6.0.3':
     resolution: {integrity: sha512-Iyn8698hp/e5+v8SNBBruTa7UfrMEP52R16dc9jMpqSyEcPsvWFQo+R6WwHCUnJiLIsuci2ZoEZ7ilrSSCPIVg==}
-
-  '@fastify/session@11.1.0':
-    resolution: {integrity: sha512-OxAX79PtVyTKxfmHT8e0jDFliw/2EmhOxe1Mj35jhL20j8CEpj5Li2zOVi5PqHc5Y+7N2w0tOmtM8mB6NjAIGw==}
 
   '@humanfs/core@0.19.1':
     resolution: {integrity: sha512-5DyQ4+1JEUzejeK1JGICcideyfUbGixgS9jNgex5nqkW+cY7WZhxBigmieN5Qnw9ZosSNVC9KQKyb+GUaGyKUA==}
@@ -4468,11 +4462,6 @@ snapshots:
       http-errors: 2.0.0
       type-is: 1.6.18
       vary: 1.1.2
-
-  '@fastify/session@11.1.0':
-    dependencies:
-      fastify-plugin: 5.0.1
-      safe-stable-stringify: 2.5.0
 
   '@humanfs/core@0.19.1': {}
 
