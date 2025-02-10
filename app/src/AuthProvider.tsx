@@ -1,10 +1,12 @@
 import axios from 'axios'
 import { ReactNode, useEffect, useState } from 'react'
 
+import Loading from './components/Loading'
 import { AuthContext } from './contexts/AuthContext'
 
 export const AuthProvider = ({ children }: { children: ReactNode }) => {
   const [isAuthenticated, setIsAuthenticated] = useState(false)
+  const [loading, setLoading] = useState(true) // Add loading state
 
   // Check authentication status on app load
   useEffect(() => {
@@ -14,6 +16,8 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
         setIsAuthenticated(true)
       } catch {
         setIsAuthenticated(false)
+      } finally {
+        setLoading(false)
       }
     }
 
@@ -49,6 +53,10 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
     } catch {
       throw new Error('Logout failed')
     }
+  }
+
+  if (loading) {
+    return <Loading />
   }
 
   return (
