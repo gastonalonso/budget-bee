@@ -2,10 +2,10 @@ import { Outlet } from 'react-router-dom'
 
 import Navbar from '../components/Navbar'
 
-function BasicLayout({ isAuthenticated }: { isAuthenticated: boolean }) {
+function BasicLayout() {
   return (
     <div>
-      <Navbar isAuthenticated={isAuthenticated} />
+      <Navbar />
       <div className="hero min-h-screen bg-base-200">
         <div className="hero-content flex-col lg:flex-row-reverse">
           <Outlet />

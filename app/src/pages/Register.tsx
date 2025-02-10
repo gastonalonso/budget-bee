@@ -1,23 +1,23 @@
 import { useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 
+import { useAuth } from '../contexts/AuthContext'
+
 function Register() {
   const [username, setUsername] = useState('')
   const [password, setPassword] = useState('')
   const navigate = useNavigate()
+  const { register } = useAuth()
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
-    const response = await fetch('/api/register', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify({ username, password }),
-    })
-    if (response.ok) {
-      navigate('/login')
+    try {
+      await register(username, password)
+    } catch {
+      return
     }
+
+    navigate('/login')
   }
 
   return (

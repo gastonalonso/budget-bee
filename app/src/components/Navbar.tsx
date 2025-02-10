@@ -1,6 +1,10 @@
 import { Link } from 'react-router-dom'
 
-function Navbar({ isAuthenticated }: { isAuthenticated: boolean }) {
+import { useAuth } from '../contexts/AuthContext'
+
+function Navbar() {
+  const { isAuthenticated } = useAuth()
+
   return (
     <div className="navbar bg-base-100">
       <div className="navbar-start">
@@ -19,11 +23,7 @@ function Navbar({ isAuthenticated }: { isAuthenticated: boolean }) {
         </ul>
       </div>
       <div className="navbar-end">
-        {isAuthenticated ? (
-          <Link to="/logout" className="btn">
-            Logout
-          </Link>
-        ) : (
+        {isAuthenticated && (
           <>
             <Link to="/register" className="btn">
               Register

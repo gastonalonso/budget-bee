@@ -1,29 +1,24 @@
 import { useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 
-function Login({
-  setIsAuthenticated,
-}: {
-  setIsAuthenticated: (isAuthenticated: boolean) => void
-}) {
+import { useAuth } from '../contexts/AuthContext'
+
+function Login() {
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
   const navigate = useNavigate()
+  const { login } = useAuth()
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
-    const response = await fetch('/api/auth/login', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify({ email, password }),
-      credentials: 'include',
-    })
-    if (response.ok) {
-      setIsAuthenticated(true)
-      navigate('/')
+
+    try {
+      await login(email, password)
+    } catch {
+      return
     }
+
+    navigate('/')
   }
 
   return (
