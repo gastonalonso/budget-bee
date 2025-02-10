@@ -1,6 +1,5 @@
 import { Route, BrowserRouter as Router, Routes } from 'react-router-dom'
 
-import './App.css'
 import ProtectedRoute from './components/ProtectedRoute'
 import BasicLayout from './layouts/BasicLayout'
 import Example from './pages/Example'
