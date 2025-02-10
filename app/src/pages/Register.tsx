@@ -25,9 +25,10 @@ function Register() {
       <div className="text-center lg:text-left">
         <h1 className="text-5xl font-bold">Register now!</h1>
         <p className="py-6">
-          Provident cupiditate voluptatem et in. Quaerat fugiat ut assumenda
-          excepturi exercitationem quasi. In deleniti eaque aut repudiandae et a
-          id nisi.
+          By registering, you will gain access to a personalized budget tracker,
+          insightful financial reports, and the ability to set and track your
+          financial goals. Join us today and take control of your financial
+          future!
         </p>
       </div>
       <div className="card shrink-0 w-full max-w-sm shadow-2xl bg-base-100">

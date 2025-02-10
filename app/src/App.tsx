@@ -7,9 +7,8 @@ import {
 
 import ProtectedRoute from './components/ProtectedRoute'
 import { useAuth } from './contexts/AuthContext'
-import BasicLayout from './layouts/BasicLayout'
+import BaseLayout from './layouts/BaseLayout'
 import Dashboard from './pages/Dashboard'
-import Example from './pages/Example'
 import Home from './pages/Home'
 import Login from './pages/Login'
 import Logout from './pages/Logout'
@@ -21,7 +20,7 @@ function App() {
   return (
     <Router>
       <Routes>
-        <Route element={<BasicLayout />}>
+        <Route element={<BaseLayout />}>
           <Route
             path="/"
             element={isAuthenticated ? <Navigate to="/dashboard" /> : <Home />}
@@ -31,7 +30,6 @@ function App() {
           <Route path="/logout" element={<Logout />} />
           <Route element={<ProtectedRoute />}>
             <Route path="/dashboard" element={<Dashboard />} />
-            <Route path="/example" element={<Example />} />
           </Route>
         </Route>
       </Routes>

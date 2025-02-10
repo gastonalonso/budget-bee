@@ -1,36 +1,22 @@
-import { useState } from 'react'
+import React from 'react'
+import { Link } from 'react-router-dom'
 
-import PWABadge from '../PWABadge.tsx'
-import reactLogo from '../assets/react.svg'
-import appLogo from '/favicon.svg'
-
-function Home() {
-  const [count, setCount] = useState(0)
-
+const Home: React.FC = () => {
   return (
-    <>
-      <div>
-        <a href="https://vite.dev" target="_blank">
-          <img src={appLogo} className="logo" alt="app logo" />
-        </a>
-        <a href="https://react.dev" target="_blank">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
-      </div>
-      <h1>app</h1>
-      <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
-        </button>
-        <p>
-          Edit <code>src/App.tsx</code> and save to test HMR
+    <div className="h-full bg-base-200 flex flex-col items-center justify-center">
+      <div className="text-center">
+        <h1 className="text-5xl font-bold">Welcome to Budget Bee</h1>
+        <p className="py-6 text-lg">
+          Budget Bee helps you manage your home expenses effortlessly. Track
+          your spending, set budgets, and save more.
         </p>
+        <div className="flex justify-center space-x-4">
+          <Link to="/register" className="btn btn-primary">
+            Get Started
+          </Link>
+        </div>
       </div>
-      <p className="read-the-docs">
-        Click on the Vite and React logos to learn more
-      </p>
-      <PWABadge />
-    </>
+    </div>
   )
 }
 
