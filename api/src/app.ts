@@ -2,6 +2,7 @@ import AutoLoad, { AutoloadPluginOptions } from '@fastify/autoload'
 import fastifyCookie from '@fastify/cookie'
 import fastifyJwt from '@fastify/jwt'
 import fastifyStatic from '@fastify/static'
+import 'dotenv/config'
 import { FastifyPluginAsync, FastifyServerOptions } from 'fastify'
 import { join } from 'node:path'
 
@@ -20,7 +21,7 @@ const app: FastifyPluginAsync<AppOptions> = async (
 
   // Fastify JWT Plugin
   void fastify.register(fastifyJwt, {
-    secret: 'a7f8d3e4c2b9a1e6f5d8c3b2a9e4f7d6',
+    secret: process.env.JWT_SECRET as string,
     cookie: {
       cookieName: 'token',
       signed: false,
