@@ -2,9 +2,12 @@
   "private": true,
   "scripts": {
     "start": "nx run app:build && nx run api:start",
-    "dev": "nx run-many --target=dev --all"
+    "dev:api": "nx run api:dev",
+    "dev:app": "nx run app:dev",
+    "dev": "concurrently pnpm:dev:api pnpm:dev:app"
   },
   "devDependencies": {
+    "concurrently": "^9.0.0",
     "nx": "20.4.2"
   }
 }
