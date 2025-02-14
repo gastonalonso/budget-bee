@@ -11,3 +11,33 @@ services:
       - 5432:5432
     volumes:
       - ./db:/var/lib/postgresql/data
+  api:
+    build:
+      context: ./
+      dockerfile: ./api/Dockerfile
+    container_name: budget-bee-api
+    ports:
+      - 3000:3000
+      - 9229:9229 # Debug port
+    volumes:
+      - ./api:/opt/api
+      - /opt/api/node_modules
+    env_file:
+      - .env
+    depends_on:
+      - db
+  app:
+    build:
+      context: ./
+      dockerfile: ./app/Dockerfile
+    container_name: budget-bee-app
+    ports:
+      - 5173:5173
+      - 24678:24678 # Vite HMR port
+    volumes:
+      - ./app:/opt/app
+      - /opt/app/node_modules
+    env_file:
+      - .env
+    depends_on:
+      - api

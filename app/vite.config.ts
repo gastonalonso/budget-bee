@@ -12,11 +12,6 @@ export default defineConfig({
       registerType: 'autoUpdate',
       injectRegister: false,
 
-      pwaAssets: {
-        disabled: false,
-        config: true,
-      },
-
       manifest: {
         name: 'app',
         short_name: 'app',
@@ -42,7 +37,7 @@ export default defineConfig({
     host: '0.0.0.0',
     proxy: {
       '/api': {
-        target: 'http://localhost:3000',
+        target: 'http://api:3000',
         changeOrigin: true,
         rewrite: (path) => path,
       },

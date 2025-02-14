@@ -1,13 +1,9 @@
 {
   "private": true,
   "scripts": {
-    "start": "nx run app:build && nx run api:start",
-    "dev:api": "nx run api:dev",
-    "dev:app": "nx run app:dev",
-    "dev": "concurrently pnpm:dev:api pnpm:dev:app"
+    "start": "nx run app:build && nx run api:start"
   },
   "devDependencies": {
-    "concurrently": "^9.0.0",
     "nx": "20.4.2"
   }
 }
