@@ -50,11 +50,10 @@ const login: FastifyPluginAsync = async (fastify, opts) => {
 
       return reply
         .setCookie('token', token, {
-          domain: 'localhost',
-          path: '/',
-          secure: true,
           httpOnly: true,
+          secure: true,
           sameSite: 'strict',
+          path: '/',
         })
         .code(200)
         .send({ message: 'Success' })

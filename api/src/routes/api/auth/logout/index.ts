@@ -6,6 +6,7 @@ const logout: FastifyPluginAsync = async (fastify, opts): Promise<void> => {
       httpOnly: true,
       secure: true,
       sameSite: 'strict',
+      path: '/',
     })
     reply.status(200).send({ message: 'Logout successful' })
   })
