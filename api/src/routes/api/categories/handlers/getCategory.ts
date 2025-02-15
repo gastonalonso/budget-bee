@@ -24,7 +24,7 @@ export const getCategory = async (
   const category = await prisma.category.findUnique({
     where: {
       id: parseInt(categoryId),
-      userId: userId,
+      userId,
     },
   })
 

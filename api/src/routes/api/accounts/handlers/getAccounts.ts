@@ -2,15 +2,14 @@ import { FastifyReply, FastifyRequest } from 'fastify'
 
 import { prisma } from '../../../../prisma'
 
-export const getCategories = async (
+export const getAccounts = async (
   request: FastifyRequest,
   reply: FastifyReply,
 ) => {
   const { userId } = request.user
 
-  const categories = await prisma.category.findMany({
+  const accounts = await prisma.account.findMany({
     where: { userId },
   })
-
-  return categories
+  return accounts
 }
