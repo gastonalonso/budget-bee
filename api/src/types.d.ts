@@ -1,8 +1,7 @@
-import { Session } from '@fastify/session'
 import 'fastify'
 
-declare module 'fastify' {
-  interface Session {
-    userId?: number
+declare module '@fastify/jwt' {
+  interface FastifyJWT {
+    user: { userId: number }
   }
 }

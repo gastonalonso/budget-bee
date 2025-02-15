@@ -3,7 +3,7 @@ import fastifyPlugin from 'fastify-plugin'
 
 export default fastifyPlugin(async (fastify) => {
   fastify.decorate(
-    'jwtVerify',
+    'authenticate',
     async (request: FastifyRequest, reply: FastifyReply) => {
       try {
         await request.jwtVerify()
@@ -16,6 +16,6 @@ export default fastifyPlugin(async (fastify) => {
 
 declare module 'fastify' {
   export interface FastifyInstance {
-    jwtVerify(request: FastifyRequest, reply: FastifyReply): Promise<void>
+    authenticate(request: FastifyRequest, reply: FastifyReply): Promise<void>
   }
 }
