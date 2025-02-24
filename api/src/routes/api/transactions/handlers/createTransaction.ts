@@ -1,9 +1,11 @@
+import { TransactionType } from '@prisma/client'
 import { FastifyReply, FastifyRequest } from 'fastify'
 
 import { prisma } from '../../../../prisma'
 
 export interface CreateTransactionBody {
   amount: number
+  type: 'INFLOW' | 'OUTFLOW'
   description: string
   date: string
   categoryId: number
@@ -12,9 +14,17 @@ export interface CreateTransactionBody {
 
 export const createTransactionBodySchema = {
   type: 'object',
-  required: ['amount', 'description', 'date', 'categoryId', 'accountId'],
+  required: [
+    'amount',
+    'type',
+    'description',
+    'date',
+    'categoryId',
+    'accountId',
+  ],
   properties: {
     amount: { type: 'number' },
+    type: { type: 'string', enum: Object.values(TransactionType) },
     description: { type: 'string', minLength: 1 },
     date: { type: 'string', format: 'date-time' },
     categoryId: { type: 'number' },

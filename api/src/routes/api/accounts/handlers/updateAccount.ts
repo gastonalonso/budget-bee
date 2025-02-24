@@ -10,7 +10,7 @@ export interface UpdateAccountParams {
 export interface UpdateAccountBody {
   name?: string
   type?: AccountType
-  balance?: number
+  initialBalance?: number
 }
 
 export const updateAccountParamsSchema = {
@@ -32,7 +32,7 @@ export const updateAccountBodySchema = {
       type: 'string',
       enum: Object.values(AccountType),
     },
-    balance: {
+    initialBalance: {
       type: 'number',
     },
   },

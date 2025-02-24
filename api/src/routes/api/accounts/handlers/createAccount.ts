@@ -6,12 +6,12 @@ import { prisma } from '../../../../prisma'
 export interface CreateAccountBody {
   name: string
   type: AccountType
-  balance?: number
+  initialBalance: number
 }
 
 export const createAccountBodySchema = {
   type: 'object',
-  required: ['name', 'type'],
+  required: ['name', 'type', 'initialBalance'],
   properties: {
     name: {
       type: 'string',
@@ -21,7 +21,7 @@ export const createAccountBodySchema = {
       type: 'string',
       enum: Object.values(AccountType),
     },
-    balance: {
+    initialBalance: {
       type: 'number',
     },
   },
@@ -34,7 +34,7 @@ export const createAccount = async (
   const account = await prisma.account.create({
     data: {
       ...request.body,
-      balance: request.body.balance || 0,
+      initialBalance: request.body.initialBalance,
       userId: request.user.userId,
     },
   })

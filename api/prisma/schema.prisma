@@ -19,21 +19,20 @@ model User {
 }
 
 enum AccountType {
-  CHECKING
-  SAVINGS
+  BANK
   CREDIT_CARD
 }
 
 model Account {
-  id          Int           @id @default(autoincrement())
-  name        String
-  type        AccountType
-  balance     Float         @default(0.0)
-  userId      Int
-  user        User          @relation(fields: [userId], references: [id])
-  createdAt   DateTime      @default(now())
-  updatedAt   DateTime      @updatedAt
-  Transaction Transaction[]
+  id             Int           @id @default(autoincrement())
+  name           String
+  type           AccountType
+  initialBalance Float         @default(0.0)
+  userId         Int
+  user           User          @relation(fields: [userId], references: [id])
+  createdAt      DateTime      @default(now())
+  updatedAt      DateTime      @updatedAt
+  Transaction    Transaction[]
 }
 
 model Category {
@@ -48,17 +47,23 @@ model Category {
   @@unique([userId, name])
 }
 
+enum TransactionType {
+  INFLOW
+  OUTFLOW
+}
+
 model Transaction {
-  id          Int      @id @default(autoincrement())
+  id          Int            @id @default(autoincrement())
   amount      Float
+  type        TransactionType
   description String
   date        DateTime
   userId      Int
-  user        User     @relation(fields: [userId], references: [id])
+  user        User           @relation(fields: [userId], references: [id])
   categoryId  Int
-  category    Category @relation(fields: [categoryId], references: [id])
+  category    Category       @relation(fields: [categoryId], references: [id])
   accountId   Int
-  account     Account  @relation(fields: [accountId], references: [id])
-  createdAt   DateTime @default(now())
-  updatedAt   DateTime @updatedAt
+  account     Account        @relation(fields: [accountId], references: [id])
+  createdAt   DateTime       @default(now())
+  updatedAt   DateTime       @updatedAt
 }
