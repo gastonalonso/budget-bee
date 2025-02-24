@@ -16,6 +16,7 @@ model User {
   Account     Account[]
   Category    Category[]
   Transaction Transaction[]
+  Budget      Budget[]
 }
 
 enum AccountType {
@@ -43,6 +44,7 @@ model Category {
   createdAt   DateTime      @default(now())
   updatedAt   DateTime      @updatedAt
   Transaction Transaction[]
+  Budget      Budget[]
 
   @@unique([userId, name])
 }
@@ -66,4 +68,18 @@ model Transaction {
   account     Account        @relation(fields: [accountId], references: [id])
   createdAt   DateTime       @default(now())
   updatedAt   DateTime       @updatedAt
+}
+
+model Budget {
+  id         Int      @id @default(autoincrement())
+  amount     Float
+  date       DateTime
+  userId     Int
+  user       User     @relation(fields: [userId], references: [id])
+  categoryId Int
+  category   Category @relation(fields: [categoryId], references: [id])
+  createdAt  DateTime @default(now())
+  updatedAt  DateTime @updatedAt
+
+  @@unique([userId, categoryId, date])
 }
