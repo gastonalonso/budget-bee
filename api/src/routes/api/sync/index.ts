@@ -17,6 +17,8 @@ const categoriesRange = 'START HERE!DR4:DX230'
 const bankAccountsRange = 'START HERE!BD7:BO37'
 const creditAccountsRange = 'START HERE!CH7:CS45'
 const transactionsRange = 'Transactions!B5:G'
+const budgetDatesRange = 'Budget!G6:6'
+const budgetsRange = 'Budget!F13:S'
 
 const sync: FastifyPluginAsync = async (fastify, opts) => {
   async function fetchMatrixData(range: string, errorMessage: string) {
@@ -46,19 +48,36 @@ const sync: FastifyPluginAsync = async (fastify, opts) => {
 
   fastify.post('/', async (request, reply) => {
     try {
-      const [categories, bankAccounts, creditAccounts, transactions] =
-        await Promise.all([
-          fetchFlattenedData(categoriesRange, 'Failed to fetch categories'),
-          fetchFlattenedData(
-            bankAccountsRange,
-            'Failed to fetch bank accounts',
-          ),
-          fetchFlattenedData(
-            creditAccountsRange,
-            'Failed to fetch credit accounts',
-          ),
-          fetchMatrixData(transactionsRange, 'Failed to fetch transactions'),
-        ])
+      const [
+        categories,
+        bankAccounts,
+        creditAccounts,
+        transactions,
+        budgetDates,
+        budgetsMatrix,
+      ] = await Promise.all([
+        fetchFlattenedData(categoriesRange, 'Failed to fetch categories'),
+        fetchFlattenedData(bankAccountsRange, 'Failed to fetch bank accounts'),
+        fetchFlattenedData(
+          creditAccountsRange,
+          'Failed to fetch credit accounts',
+        ),
+        fetchMatrixData(transactionsRange, 'Failed to fetch transactions'),
+        fetchFlattenedData(budgetDatesRange, 'Failed to fetch budget dates'),
+        fetchMatrixData(budgetsRange, 'Failed to fetch budgets'),
+      ])
+
+      const budgets = budgetsMatrix
+        .map((budget) => {
+          const [category, ...amounts] = budget
+          return amounts.map((amount, index) => ({
+            category,
+            date: budgetDates[index],
+            amount,
+          }))
+        })
+        .filter((budget) => budget.length)
+        .flat()
 
       const accounts = [...bankAccounts, ...creditAccounts]
 
@@ -66,6 +85,7 @@ const sync: FastifyPluginAsync = async (fastify, opts) => {
         categories,
         accounts,
         transactions,
+        budgets,
       }
     } catch (error) {
       if (error instanceof GoogleSheetsError) {
