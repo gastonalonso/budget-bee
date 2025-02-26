@@ -34,6 +34,8 @@ model Account {
   createdAt      DateTime      @default(now())
   updatedAt      DateTime      @updatedAt
   Transaction    Transaction[]
+
+  @@unique([userId, name, type])
 }
 
 model Category {
@@ -55,19 +57,19 @@ enum TransactionType {
 }
 
 model Transaction {
-  id          Int            @id @default(autoincrement())
+  id          Int             @id @default(autoincrement())
   amount      Float
   type        TransactionType
   description String
   date        DateTime
   userId      Int
-  user        User           @relation(fields: [userId], references: [id])
+  user        User            @relation(fields: [userId], references: [id])
   categoryId  Int
-  category    Category       @relation(fields: [categoryId], references: [id])
+  category    Category        @relation(fields: [categoryId], references: [id])
   accountId   Int
-  account     Account        @relation(fields: [accountId], references: [id])
-  createdAt   DateTime       @default(now())
-  updatedAt   DateTime       @updatedAt
+  account     Account         @relation(fields: [accountId], references: [id])
+  createdAt   DateTime        @default(now())
+  updatedAt   DateTime        @updatedAt
 }
 
 model Budget {
