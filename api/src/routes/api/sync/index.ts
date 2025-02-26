@@ -1,4 +1,4 @@
-import { AccountType, TransactionType } from '@prisma/client'
+import { AccountType, CategoryType, TransactionType } from '@prisma/client'
 import { FastifyPluginAsync } from 'fastify'
 import { google } from 'googleapis'
 
@@ -15,7 +15,8 @@ const auth = new google.auth.GoogleAuth({
 const sheets = google.sheets({ version: 'v4', auth })
 
 const spreadsheetId = '1jVy_nHP8CMXmb_RZaxoi2_Mnnu0SSxSTffrLqsyXjzM'
-const categoriesRange = 'START HERE!DR4:DX230'
+const expenseCategoriesRange = 'START HERE!DR4:DX230'
+const incomeCategoriesRange = 'START HERE!FN7:GB26'
 const bankAccountsRange = 'START HERE!BD7:BO37'
 const creditAccountsRange = 'START HERE!CH7:CS45'
 const transactionsRange = 'Transactions!B5:G'
@@ -54,14 +55,22 @@ const sync: FastifyPluginAsync = async (fastify, opts) => {
     async (request, reply) => {
       try {
         const [
-          categories,
+          expenseCategories,
+          incomeCategories,
           bankAccounts,
           creditAccounts,
           transactions,
           budgetDates,
           budgetsMatrix,
         ] = await Promise.all([
-          fetchFlattenedData(categoriesRange, 'Failed to fetch categories'),
+          fetchFlattenedData(
+            expenseCategoriesRange,
+            'Failed to fetch categories',
+          ),
+          fetchFlattenedData(
+            incomeCategoriesRange,
+            'Failed to fetch income categories',
+          ),
           fetchFlattenedData(
             bankAccountsRange,
             'Failed to fetch bank accounts',
@@ -98,13 +107,28 @@ const sync: FastifyPluginAsync = async (fastify, opts) => {
           await tx.category.deleteMany({ where: { userId } })
           await tx.account.deleteMany({ where: { userId } })
 
-          // Bulk create categories
-          const categoryData = categories
-            .filter((name): name is string => Boolean(name.trim()))
-            .map((name) => ({
+          const categories = [
+            ...expenseCategories.map((name) => ({
               name,
-              userId,
-            }))
+              type: CategoryType.EXPENSE,
+            })),
+            ...incomeCategories.map((name) => ({
+              name: `-- Income -- ${name}`,
+              type: CategoryType.INCOME,
+            })),
+            // hardcoded categories
+            ...['-- Credit Card Bill Payment --'].map((name) => ({
+              name,
+              type: CategoryType.EXPENSE,
+            })),
+          ]
+
+          // Bulk create categories
+          const categoryData = categories.map(({ name, type }) => ({
+            name,
+            type,
+            userId,
+          }))
 
           await tx.category.createMany({
             data: categoryData,

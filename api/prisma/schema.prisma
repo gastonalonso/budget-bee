@@ -38,9 +38,15 @@ model Account {
   @@unique([userId, name, type])
 }
 
+enum CategoryType {
+  EXPENSE
+  INCOME
+}
+
 model Category {
   id          Int           @id @default(autoincrement())
   name        String
+  type        CategoryType
   userId      Int
   user        User          @relation(fields: [userId], references: [id])
   createdAt   DateTime      @default(now())

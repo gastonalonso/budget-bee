@@ -1,3 +1,4 @@
+import { CategoryType } from '@prisma/client'
 import { FastifyReply, FastifyRequest } from 'fastify'
 
 import { prisma } from '../../../../prisma'
@@ -8,6 +9,7 @@ export interface UpdateCategoryParams {
 
 export interface UpdateCategoryBody {
   name: string
+  type?: CategoryType
 }
 
 export const updateCategoryParamsSchema = {
@@ -26,6 +28,10 @@ export const updateCategoryBodySchema = {
       type: 'string',
       minLength: 1,
     },
+    type: {
+      type: 'string',
+      enum: ['EXPENSE', 'INCOME'],
+    },
   },
 }
 
@@ -38,7 +44,7 @@ export const updateCategory = async (
 ) => {
   const { userId } = request.user
   const { categoryId } = request.params
-  const { name } = request.body
+  const { name, type } = request.body
 
   const category = await prisma.category.update({
     where: {
@@ -47,6 +53,7 @@ export const updateCategory = async (
     },
     data: {
       name,
+      ...(type && { type }),
     },
   })
 
